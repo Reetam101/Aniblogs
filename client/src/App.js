@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Single from './pages/Single'
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
+import Update from "./pages/Update"
 
 import { Container, Row, Col } from 'react-bootstrap'
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         path: "/write",
         element: <Write />
       },
+      {
+        path: '/update/:id',
+        element: <Update />
+      }
     ]
   },
   {

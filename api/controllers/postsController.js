@@ -34,14 +34,14 @@ export const getSinglePost = (req, res) => {
 }
 
 export const getLatestPosts = (req, res) => {
-  const q = `SELECT p.post_id, p.title, p.desc, p.date, p.img, c.category_name  FROM posts p JOIN post_categories pc ON p.post_id = pc.p_id JOIN categories c ON pc.c_id = c.cat_id`
-
-  db.query(q, [], (err, data) => {
+  const q = `SELECT * FROM posts WHERE category = ?`
+  console.log(req.body.category)
+  db.query(q, [req.body.category], (err, data) => {
     if (err) {
       console.log(err)
       throw new Error(err)
     }
-    // console.log(data)
+    console.log("similar: " + data)
     return res.status(200).json(data)
   })
 }
@@ -74,6 +74,7 @@ export const addPost = (req, res) => {
 }
 
 export const updatePost = (req, res) => {
+  // update post
 
 }
 
@@ -115,15 +116,15 @@ export const setCategories = (req, res) => {
   }
 }
 
-export const getPostId = (req, res) => {
-  const q = `SELECT post_id FROM posts WHERE title = ?`
+// export const getPostId = (req, res) => {
+//   const q = `SELECT post_id FROM posts WHERE title = ?`
 
-  db.query(q, [req.body.title], (err, data) => {
-    if (err) {
-      console.log(err)
-      res.status(500).json(err)
-    }
-    console.log("post_id ", data)
-    return res.status(200).json(data)
-  })
-}
+//   db.query(q, [req.body.title], (err, data) => {
+//     if (err) {
+//       console.log(err)
+//       res.status(500).json(err)
+//     }
+//     console.log("post_id ", data)
+//     return res.status(200).json(data)
+//   })
+// }

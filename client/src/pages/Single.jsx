@@ -18,25 +18,6 @@ const Single = () => {
 
   const postId = location.pathname.split("/")[2]
 
-  function mergeCategories(posts_) {
-    const mergedPosts = [];
-    const mergedMap = new Map();
-    if (posts_.length) {
-      posts_.forEach(post => {
-        if (mergedMap.has(post.post_id)) {
-          const mergedPost = mergedMap.get(post.post_id);
-          mergedPost.category_name = [mergedPost.category_name, post.category_name].join(",");
-        } else {
-          const mergedPost = { ...post };
-          mergedMap.set(post.post_id, mergedPost);
-          mergedPosts.push(mergedPost);
-        }
-      });
-    }
-
-    return mergedPosts;
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -80,7 +61,7 @@ const Single = () => {
             {currentUser?.id === post?.id && currentUser?.id !== undefined && (
               <Row className='d-flex flex-row align-items-center'>
                 <Col lg={1} md={12} xs={12}>
-                  <Link to={`/write?edit=2`} state={post}>
+                  <Link to={`/update/${post.post_id}`} state={post}>
                     <Button className='d-flex align-items-center' variant="primary" size="sm"><Pencil />Edit</Button>
                   </Link>
                 </Col>
@@ -108,7 +89,7 @@ const Single = () => {
           </Row>
         </Col>
         <Col lg={3} md={12} className='px-3' style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 3px 8px" }}>
-          <Menu currPost={post.post_id} />
+          <Menu currPost={post.post_id} category={post?.category} />
         </Col>
       </Row>
     </Container>
