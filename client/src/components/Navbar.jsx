@@ -11,7 +11,7 @@ const NavbarComponent = () => {
     <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
       <Container>
         <LinkContainer className='text-decoration-none' to='/'>
-          <Navbar.Brand>ANIBLOGS</Navbar.Brand>
+          <Navbar.Brand><img style={{ borderRadius: '50px' }} height="50" src={Logo} alt="" /></Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls='basic-navbar' />
         <Navbar.Collapse id='basic-navbar-nav'>

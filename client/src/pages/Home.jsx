@@ -11,24 +11,6 @@ const Home = () => {
 
   const category = useLocation().search
 
-  function mergeCategories(posts_) {
-    const mergedPosts = [];
-    const mergedMap = new Map();
-
-    posts_.forEach(post => {
-      if (mergedMap.has(post.post_id)) {
-        const mergedPost = mergedMap.get(post.post_id);
-        mergedPost.category_name = [mergedPost.category_name, post.category_name].join(",");
-      } else {
-        const mergedPost = { ...post };
-        mergedMap.set(post.post_id, mergedPost);
-        mergedPosts.push(mergedPost);
-      }
-    });
-
-    return mergedPosts;
-  }
-
   console.log(posts)
 
   useEffect(() => {

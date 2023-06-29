@@ -13,7 +13,7 @@ router.route("/set-category").post(protect, setCategories)
 // router.route("/get-post-id").get(protect, getPostId)
 router.route("/:id")
   .get(getSinglePost)
-  .put(protect, updatePost)
+  .put(protect, upload.single('file'), updatePost)
   .delete(protect, deletePost)
 
 export default router

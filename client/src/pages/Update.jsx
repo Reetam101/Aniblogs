@@ -8,13 +8,26 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
+
+const modules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    ["blockquote", "code-block"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+    ["link", "image", "video"],
+    ["clean"],
+  ]
+}
+
 const Update = () => {
   const location = useLocation()
   const [post, setPost] = useState([])
-  const [value, setValue] = useState(post.desc || '');
-  const [title, setTitle] = useState(post.title || '')
-  const [img, setImg] = useState(null)
-  const [category, setCategory] = useState(post.category || '')
+
   const allCategories = [
     {
       cat_id: 1,
@@ -33,6 +46,10 @@ const Update = () => {
       category_name: "top10s"
     },
   ]
+  const [value, setValue] = useState('');
+  const [title, setTitle] = useState('')
+  const [img, setImg] = useState(null)
+  const [category, setCategory] = useState('')
 
   const { currentUser } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -49,39 +66,39 @@ const Update = () => {
         const res = await axios.get(`/posts/${postId}`)
         console.log("result data ", res.data)
         setPost(res.data[0])
+        setTitle(res.data[0].title)
+        setValue(res.data[0].desc)
+        setImg(res.data[0].post_img)
+        setCategory(res.data[0].category)
       } catch (err) {
         console.log(err)
       }
     }
 
     fetchPost()
-  }, [postId])
+  }, [setPost, postId])
+  // console.log("Post: " + post.title)
 
+  // console.log(category)
   const handleClick = async (e) => {
     e.preventDefault()
+    console.log(e)
     try {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('desc', value)
       formData.append('file', img)
-      formData.append('date', moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"))
       formData.append('category', category)
-      const res1 = await axios.put("/posts", formData)
+      const res1 = await axios.put(`/posts/${postId}`, formData)
       navigate("/")
       console.log(res1.data)
     } catch (error) {
       console.log(error)
     }
-    // try {
-    //   state ? await axios.put(`/posts/${state.post_id}`, {
-    //     title, desc: value, category_name
-    //   })
-    // } catch (err) {
-    //   console.log(err)
-    // }
+
   }
   const categoryChangeHandler = (e) => {
-    console.log("e ", e)
+    // console.log("e ", e)
     setCategory(e.label)
   }
   console.log("img:" + img)
@@ -99,7 +116,7 @@ const Update = () => {
                 onChange={e => setTitle(e.target.value)}
               />
             </InputGroup>
-            <ReactQuill theme="snow" value={value} onChange={setValue} style={{ height: "300px" }} />
+            <ReactQuill theme="snow" modules={modules} value={value} onChange={setValue} style={{ height: "300px" }} />
           </Stack>
 
         </Col>
@@ -113,7 +130,7 @@ const Update = () => {
             </div>
             <div className='col mt-3'>
               <h5>Category</h5>
-              <CreatableReactSelect onChange={categoryChangeHandler} value={category.label}
+              <CreatableReactSelect onChange={categoryChangeHandler} value={category}
                 options={allCategories.map(cat => {
                   return { label: cat.category_name, value: cat.cat_id }
                 })}

@@ -75,7 +75,16 @@ export const addPost = (req, res) => {
 
 export const updatePost = (req, res) => {
   // update post
+  console.log(req.body)
+  const q = "UPDATE posts SET `title`=?, `desc`=?, `img`=?, `category`=? WHERE `post_id`=? AND `user_id`=?"
+  const values = [req.body.title, req.body.desc, req.file.path, req.body.category, req.params.id, req.user.id]
 
+  db.query(q, values, (err, data) => {
+    if (err) {
+      return res.status(500).json(err)
+    }
+    return res.status(201).json("Post updated successfully")
+  })
 }
 
 export const deletePost = (req, res) => {

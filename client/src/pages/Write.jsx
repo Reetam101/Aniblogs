@@ -8,6 +8,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
+const modules = {
+  toolbar: [
+    [{ font: [] }],
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    ["blockquote", "code-block"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+    ["link", "image", "video"],
+    ["clean"],
+  ]
+}
+
 const Write = () => {
   // const state = useLocation().state
   const [value, setValue] = useState('');
@@ -85,7 +100,7 @@ const Write = () => {
                 onChange={e => setTitle(e.target.value)}
               />
             </InputGroup>
-            <ReactQuill theme="snow" value={value} onChange={setValue} style={{ height: "300px" }} />
+            <ReactQuill theme="snow" modules={modules} value={value} onChange={setValue} style={{ height: "300px" }} />
           </Stack>
 
         </Col>
