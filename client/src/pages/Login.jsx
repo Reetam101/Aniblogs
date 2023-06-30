@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import { Form, Card, Col, Container, Row, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/authContext'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -15,7 +16,7 @@ const Login = () => {
   const [error, setError] = useState(null)
 
   const { login, currentUser } = useContext(AuthContext)
-  console.log(currentUser)
+  console.log("currentUser: " + currentUser)
   const handleChange = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
@@ -26,7 +27,10 @@ const Login = () => {
       await login(inputs)
       navigate("/")
     } catch (err) {
-      setError(err.response.data)
+      console.log(err)
+      toast.error(err?.response?.data, {
+        position: 'bottom-center'
+      })
     }
   }
 
@@ -51,7 +55,6 @@ const Login = () => {
                   <Button onClick={handleSubmit} variant="primary">Login</Button>
 
                 </Form.Group>
-                {error && <Alert variant='danger'>{error}</Alert>}
                 <p className='text-muted'>Don't have an account ? <Link to="/register">Register</Link></p>
               </Form>
 

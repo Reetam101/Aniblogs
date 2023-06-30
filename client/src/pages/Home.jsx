@@ -5,13 +5,13 @@ import axios from 'axios'
 import moment from 'moment'
 import { LinkContainer } from 'react-router-bootstrap'
 import DOMPurify from 'dompurify'
+import { toast } from 'react-toastify'
 
 const Home = () => {
   const [posts, setPosts] = useState([])
 
   const category = useLocation().search
 
-  console.log(posts)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,8 @@ const Home = () => {
 
         setPosts(res.data.sort((a, b) => new Date(b.date) - new Date(a.date)))
       } catch (err) {
-        console.log(err)
+        // console.log(err)
+        toast.error(err?.response?.data || err)
       }
     }
 

@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider, Route, Outlet } from "react-router-dom"
-// import './style.scss'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Write from './pages/Write'
@@ -8,15 +7,21 @@ import Single from './pages/Single'
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
 import Update from "./pages/Update"
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { Container } from "react-bootstrap"
 
-import { Container, Row, Col } from 'react-bootstrap'
 
 
 const Layout = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <ToastContainer />
+      <Container className="my-2">
+
+        <Outlet />
+      </Container>
       <Footer />
     </>
   )
@@ -42,26 +47,21 @@ const router = createBrowserRouter([
       {
         path: '/update/:id',
         element: <Update />
-      }
+      },
+      {
+        path: "/register",
+        element: <Register />
+      },
+      {
+        path: "/login",
+        element: <Login />
+      },
     ]
-  },
-  {
-    path: "/register",
-    element: <Register />
-  },
-  {
-    path: "/login",
-    element: <Login />
   },
 ])
 
 function App() {
   return (
-    // <div className="app">
-    //   <div className="container">
-    //     <RouterProvider router={router} />
-    //   </div>
-    // </div>
     <RouterProvider router={router} />
   );
 }

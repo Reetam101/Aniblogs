@@ -9,7 +9,7 @@ export const registerUser = (req, res) => {
 
     db.query(q, [req.body.email, req.body.username], (err, data) => {
       if (err) {
-        return res.json(err)
+        return res.status(400).json(err)
       }
       if (data.length) {
         return res.status(409).json("User already exists")
@@ -26,12 +26,12 @@ export const registerUser = (req, res) => {
       ]
 
       db.query(q, [values], (err, data) => {
-        if (err) return res.json(err)
-        return res.status(200).json("User registered successfully!")
+        if (err) return res.status(400).json(err)
+        return res.status(201).json("User registered successfully!")
       })
     })
   } else {
-    return res.status(400).json("Please input all the fields")
+    return res.status(400).json("Please fill all the fields")
   }
 }
 
@@ -39,18 +39,27 @@ export const loginUser = (req, res) => {
   // const { username, password} = req.body
 
   if (!req.body.username || !req.body.password) {
-    return res.status(400).json("Please fill all the fields")
+    return res.status(400).json("Please fill out all the fields")
+    // throw new Error()
   }
   else {
     const q = "SELECT * FROM users WHERE username = ?"
     db.query(q, [req.body.username], (err, data) => {
-      if (err) return res.json(err)
-      if (data.length === 0) return res.status(404).json("User not found")
+      if (err) {
+        return res.status(400).json(err)
+        // console.log(err)
+        // throw new Error(err)
+      }
+      if (data.length === 0) {
+        return res.status(404).json("User not found")
+        // throw new Error("User not found")
+      }
 
       const isPasswordCorrect = bcrypt.compareSync(req.body.password, data[0].password)
 
       if (!isPasswordCorrect) {
-        return res.status(400).json("Wrong username or password")
+        return res.status(401).json("Wrong username or password")
+        // throw new Error("Wrong username or password")
       }
       const token = jwt.sign({ id: data[0].id }, process.env.JWT_SECRET)
       const { password, ...other } = data[0]

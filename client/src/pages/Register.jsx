@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Form, Button, Card, Container, Row, Col, Alert } from 'react-bootstrap'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Register = () => {
   const [inputs, setInputs] = useState({
@@ -22,10 +23,15 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      // toast.success("Hello")
       const res = await axios.post("/auth/register", inputs)
       navigate("/login")
     } catch (err) {
-      setError(err.response.data)
+      // console.log(err)
+      toast.error(err?.response?.data, {
+        position: 'bottom-center'
+      })
+      // setError(err.response.data)
     }
   }
 
@@ -55,7 +61,6 @@ const Register = () => {
                   <Button onClick={handleSubmit} variant="primary">Register</Button>
 
                 </Form.Group>
-                {error && <Alert variant='danger'>{error}</Alert>}
 
                 <p className='text-muted'>Already have an account ? <Link to="/login">Login</Link></p>
               </Form>
