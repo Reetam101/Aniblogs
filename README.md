@@ -9,6 +9,7 @@ A blog app about anime created using Node.js Express, React, Mysql database and 
 
 ## Backend
 - Node.js & Express
+- sequelize ORM & sequelize-cli
 - MySQL Database
 
 ### Features we have:
