@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 
 const Login = () => {
   const [inputs, setInputs] = useState({
-    username: "",
+    name: "",
     password: ""
   })
 
@@ -45,7 +45,7 @@ const Login = () => {
               <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control name="username" onChange={handleChange} type="text" placeholder="John Doe" />
+                  <Form.Control name="name" onChange={handleChange} type="text" placeholder="" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                   <Form.Label>Password</Form.Label>

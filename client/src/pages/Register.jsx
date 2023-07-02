@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 const Register = () => {
   const [inputs, setInputs] = useState({
-    username: "",
+    name: "",
     email: "",
     password: ""
   })
@@ -25,6 +25,7 @@ const Register = () => {
     try {
       // toast.success("Hello")
       const res = await axios.post("/auth/register", inputs)
+      console.log(res.data)
       navigate("/login")
     } catch (err) {
       // console.log(err)
@@ -47,7 +48,7 @@ const Register = () => {
               <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control name="username" onChange={handleChange} type="text" placeholder="john doe" />
+                  <Form.Control name="name" onChange={handleChange} type="text" placeholder="john doe" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                   <Form.Label>Email address</Form.Label>

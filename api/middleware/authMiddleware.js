@@ -1,5 +1,4 @@
-import jwt from 'jsonwebtoken'
-import { db } from '../config/db.js'
+const jwt = require('jsonwebtoken')
 
 const protect = (req, res, next) => {
   let token
@@ -25,4 +24,4 @@ const protect = (req, res, next) => {
   }
 }
 
-export { protect }
+module.exports = { protect }
