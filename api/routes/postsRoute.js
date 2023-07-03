@@ -1,7 +1,4 @@
 const express = require('express')
-// import { getPosts, addPost, getSinglePost, updatePost, deletePost, getLatestPosts, getAllCategories, setCategories } from '../controllers/postsController.js'
-// import { protect } from '../middleware/authMiddleware.js'
-// import { upload } from '../middleware/multerMiddleware.js'
 const { getPosts, addPost, getSinglePost, updatePost, deletePost, getLatestPosts,
   getAllCategories, setCategories } = require('../controllers/postsController')
 const { protect } = require('../middleware/authMiddleware')

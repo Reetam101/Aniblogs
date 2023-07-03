@@ -28,23 +28,23 @@ const Write = () => {
   const [value, setValue] = useState('');
   const [title, setTitle] = useState('')
   const [img, setImg] = useState(null)
-  const [category, setCategory] = useState('')
-  const allCategories = [
+  const [tags, setTags] = useState([])
+  const allTags = [
     {
-      cat_id: 1,
-      category_name: "action"
+      tag_id: 1,
+      tag_name: "action"
     },
     {
-      cat_id: 2,
-      category_name: "isekai"
+      tag_id: 2,
+      tag_name: "isekai"
     },
     {
-      cat_id: 3,
-      category_name: "romance"
+      tag_id: 3,
+      tag_name: "romance"
     },
     {
-      cat_id: 4,
-      category_name: "top10s"
+      tag_id: 4,
+      tag_name: "top10s"
     },
   ]
 
@@ -63,13 +63,13 @@ const Write = () => {
     try {
       const formData = new FormData()
       formData.append('title', title)
-      formData.append('desc', value)
+      formData.append('content', value)
       formData.append('file', img)
-      formData.append('date', moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"))
-      formData.append('category', category)
-      const res1 = await axios.post("/posts", formData)
+      formData.append('tags', JSON.stringify(tags))
+      const res = await axios.post("/posts", formData)
+      console.log("result: " + res.data)
       navigate("/")
-      console.log(res1.data)
+      // console.log(res.data)
     } catch (error) {
       console.log(error)
     }
@@ -81,11 +81,10 @@ const Write = () => {
     //   console.log(err)
     // }
   }
-  const categoryChangeHandler = (e) => {
-    console.log("e ", e)
-    setCategory(e.label)
+  const tagChangeHandler = (t) => {
+    console.log("t ", t)
+    setTags(t)
   }
-  console.log("img:" + img)
   return (
     <Container className='my-5'>
       <Row>
@@ -114,9 +113,12 @@ const Write = () => {
             </div>
             <div className='col mt-3'>
               <h5>Category</h5>
-              <CreatableReactSelect onChange={categoryChangeHandler} value={category.label}
-                options={allCategories.map(cat => {
-                  return { label: cat.category_name, value: cat.cat_id }
+              <CreatableReactSelect onChange={tagChangeHandler} isMulti
+                options={allTags.map(tag => {
+                  return { label: tag.tag_name, value: tag.tag_id }
+                })}
+                value={tags.map(tag => {
+                  return { label: tag.label, value: tag.value }
                 })}
               />
             </div>

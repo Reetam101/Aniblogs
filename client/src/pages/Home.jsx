@@ -17,8 +17,8 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/posts${category}`)
-
-        setPosts(res.data.sort((a, b) => new Date(b.date) - new Date(a.date)))
+        console.log(res.data.data)
+        setPosts(res.data.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))
       } catch (err) {
         // console.log(err)
         toast.error(err?.response?.data || err)
@@ -27,7 +27,6 @@ const Home = () => {
 
     fetchData();
   }, [category])
-  console.log("From home: " + posts)
 
   return (
     <Container className='my-3'>
@@ -38,24 +37,23 @@ const Home = () => {
               <Card style={{ maxWidth: '640px', boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}>
                 <Row>
                   <Col md={4} xs={2}>
-                    <img src={`http://localhost:8000/api/${post.img}`} className="card-img" alt="..." />
+                    <img src={`http://localhost:8000/api/${post.image}`} className="card-img" alt="..." />
                   </Col>
                   <Col md={8} xs={10}>
                     <Card.Body>
                       <Card.Title>{post.title}</Card.Title>
                       <Card.Text
                         dangerouslySetInnerHTML={{
-                          __html: DOMPurify.sanitize(post.desc.substring(0, 50)),
+                          __html: DOMPurify.sanitize(post.content.substring(0, 50)),
                         }}
                       ></Card.Text>
                       <Card.Text>
-                        <Badge bg='dark'>{post.category}</Badge>
-                        {/* {post.category_name.split(",").map(cat_name => <Badge style={{ marginRight: '5px' }} bg='dark'>{cat_name}</Badge>)} */}
+                        {post.Tags.map(tag => <Badge key={tag.tag_id} style={{ marginRight: '5px' }} bg='dark'>{tag.tag_name}</Badge>)}
                       </Card.Text>
                       <Link to={`/post/${post.post_id}`}>
                         <Button variant='primary' size="sm">Read more</Button>
                       </Link>
-                      <Card.Text><small className="text-muted">Posted {moment(post?.date).fromNow()}</small></Card.Text>
+                      <Card.Text><small className="text-muted">Posted {moment(post?.createdAt).fromNow()}</small></Card.Text>
                     </Card.Body>
                   </Col>
                 </Row>

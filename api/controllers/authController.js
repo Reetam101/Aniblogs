@@ -66,7 +66,7 @@ const logoutUser = (req, res) => {
   res.clearCookie("access_token", {
     sameSite: "none",
     secure: true
-  }).status(200).json("User logged out successfully")
+  }).status(200).json({ message: "User logged out successfully" })
 }
 
 module.exports = {

@@ -48,7 +48,7 @@ const NavbarComponent = () => {
                 <>
                   <LinkContainer className='text-decoration-none' to='/profile'>
                     <Nav.Link>
-                      {currentUser?.username}
+                      {currentUser?.name}
                     </Nav.Link>
                   </LinkContainer>
                   <Nav.Link onClick={logout}>
