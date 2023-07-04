@@ -24,6 +24,6 @@ A blog app about anime created using Node.js Express, React, Mysql database and 
 
 ## Screenshots
 ![screencapture-localhost-3000-2023-07-04-12_07_32](https://github.com/Reetam101/Aniblogs/assets/59496980/fcb5bdff-dc0b-4537-b286-86b29215a04f)
+![screencapture-localhost-3000-post-15-2023-07-04-12_11_36](https://github.com/Reetam101/Aniblogs/assets/59496980/aed1604a-dbc6-4ccd-99ca-fc0a1fc118cd)
 
 ![screencapture-localhost-3000-post-34-2023-06-29-12_22_41](https://github.com/Reetam101/Aniblogs/assets/59496980/cb53bfa4-eb9d-48cd-bb3e-e8d70cf31214)
-![screencapture-localhost-3000-post-36-2023-06-29-12_22_22](https://github.com/Reetam101/Aniblogs/assets/59496980/815ecf62-9db2-467d-b0fd-d0c9088bd928)
